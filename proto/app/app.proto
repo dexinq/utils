@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package app;
+
+import "proto/global/global.proto";
+
+service App {
+    rpc CreateAppObject(AppObject) returns (global.Response) {};
+    rpc UpdateAppObject(AppObject) returns (global.Response) {};
+    rpc GetAppObject(AppFilter) returns (AppList) {};
+}
+
+message AppFilter {
+    string AppName = 1;
+    string AppType = 2;
+    int64 AppRegisterTime = 3;
+}
+
+message AppObject {
+    int32 AppStatus = 1;   // available or lose function
+    string AppName = 2;   // uniq
+    string AppType = 3;   // something like cron, fire once and so on
+    int64 AppActionTime = 4;   // last fire time
+    int32 AppHidden = 5;  // a data getter task must relation to a app object, if inner app set hidden true
+
+}
+
+message AppList {
+    repeated AppObject ObjList = 1;
+}
+
+message AppData {
+    string DataSource = 1;
+    string TableName = 2;
+    repeated string dimensions = 3;
+    repeated string values = 4;
+}
+
