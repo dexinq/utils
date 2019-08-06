@@ -5,10 +5,10 @@ package dataservice
 
 import (
 	fmt "fmt"
+	controller "github.com/dexinq/utils/proto/controller"
+	global "github.com/dexinq/utils/proto/global"
 	proto "github.com/golang/protobuf/proto"
 	math "math"
-	controller "proto/controller"
-	global "proto/global"
 )
 
 import (
