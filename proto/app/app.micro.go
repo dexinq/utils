@@ -5,9 +5,9 @@ package app
 
 import (
 	fmt "fmt"
+	global "github.com/dexinq/utils/proto/global"
 	proto "github.com/golang/protobuf/proto"
 	math "math"
-	global "proto/global"
 )
 
 import (

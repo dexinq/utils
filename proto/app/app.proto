@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package app;
 
-import "proto/global/global.proto";
+import "github.com/dexinq/utils/proto/global/global.proto";
 
 service App {
     rpc CreateAppObject(AppObject) returns (global.Response) {};
