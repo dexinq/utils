@@ -15,7 +15,8 @@ message DataAcquire {
     string DataSource = 1;
     int64 StartTime = 2;
     int64 EndTime = 3;
-    string DataTable = 4;
+    repeated string Dimensions = 4;
+    repeated string Values = 5;
 }
 
 message DataObject {

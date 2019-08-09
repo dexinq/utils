@@ -61,7 +61,7 @@ func (m *Mongodb)UpdateMongo(data interface{}) error {
 	return nil
 }
 
-func (m *Mongodb)GetMongo(res *[]interface{}) error{
+func (m *Mongodb)GetMongo(q map[string]string, res *[]interface{}) error{
 	session, err:=(*m).getSession()
 	defer session.Close()
 	if err!=nil{
@@ -71,26 +71,7 @@ func (m *Mongodb)GetMongo(res *[]interface{}) error{
 
 	db := session.DB(m.database)
 	collection := db.C(m.collection)
-	err = collection.Find(nil).All(res)
-
-	if err!=nil{
-		log.Fatalf(err.Error())
-		return err
-	}
-	return nil
-}
-
-func (m *Mongodb)GetOne(query map[string]string, res *[]interface{}) error {
-	session, err:=(*m).getSession()
-	defer session.Close()
-	if err!=nil{
-		log.Fatal(err.Error())
-		return err
-	}
-
-	db := session.DB(m.database)
-	collection := db.C(m.collection)
-	err = collection.Find(query).All(res)
+	err = collection.Find(q).All(res)
 
 	if err!=nil{
 		log.Fatalf(err.Error())
