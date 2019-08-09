@@ -79,3 +79,22 @@ func (m *Mongodb)GetMongo(res *[]interface{}) error{
 	}
 	return nil
 }
+
+func (m *Mongodb)GetOne(query map[string]string, res *[]interface{}) error {
+	session, err:=(*m).getSession()
+	defer session.Close()
+	if err!=nil{
+		log.Fatal(err.Error())
+		return err
+	}
+
+	db := session.DB(m.database)
+	collection := db.C(m.collection)
+	err = collection.Find(query).All(res)
+
+	if err!=nil{
+		log.Fatalf(err.Error())
+		return err
+	}
+	return nil
+}
