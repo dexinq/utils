@@ -1,0 +1,28 @@
+syntax="proto3";
+
+import "github.com/dexinq/utils/proto/global/global.proto";
+
+// app manager is used for managing apps, each app including a bench of cron-tasks,
+// and app send cron task entity according to the app period，
+// topic will named with the message direction eg. 'srv to api' or 'api to src'
+
+service AppManager {
+    rpc GetApp(global.Empty) returns (AppList) {}
+    rpc AddApp(AppEntity) returns (global.Response) {}
+    rpc ModifyApp(AppEntity) returns (global.Response) {}
+}
+
+message AppEntity {
+    string AppName = 1;
+    int64 CreateAt = 2;
+    int64 UpdateAt = 3;
+    string description = 4;
+    string AppType = 5;
+    int32 AppStatus = 6;
+    string AppPeriod = 7;
+    repeated string Topic = 8;
+}
+
+message AppList {
+    repeated AppEntity ael = 1;
+}
