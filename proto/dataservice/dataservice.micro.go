@@ -37,6 +37,7 @@ var _ server.Option
 
 type DataService interface {
 	DataServe(ctx context.Context, in *DataAcquire, opts ...client.CallOption) (*Response, error)
+	DataInsert(ctx context.Context, in *DataDescription, opts ...client.CallOption) (*global.Response, error)
 }
 
 type dataService struct {
@@ -67,15 +68,27 @@ func (c *dataService) DataServe(ctx context.Context, in *DataAcquire, opts ...cl
 	return out, nil
 }
 
+func (c *dataService) DataInsert(ctx context.Context, in *DataDescription, opts ...client.CallOption) (*global.Response, error) {
+	req := c.c.NewRequest(c.name, "DataService.DataInsert", in)
+	out := new(global.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for DataService service
 
 type DataServiceHandler interface {
 	DataServe(context.Context, *DataAcquire, *Response) error
+	DataInsert(context.Context, *DataDescription, *global.Response) error
 }
 
 func RegisterDataServiceHandler(s server.Server, hdlr DataServiceHandler, opts ...server.HandlerOption) error {
 	type dataService interface {
 		DataServe(ctx context.Context, in *DataAcquire, out *Response) error
+		DataInsert(ctx context.Context, in *DataDescription, out *global.Response) error
 	}
 	type DataService struct {
 		dataService
@@ -90,6 +103,10 @@ type dataServiceHandler struct {
 
 func (h *dataServiceHandler) DataServe(ctx context.Context, in *DataAcquire, out *Response) error {
 	return h.DataServiceHandler.DataServe(ctx, in, out)
+}
+
+func (h *dataServiceHandler) DataInsert(ctx context.Context, in *DataDescription, out *global.Response) error {
+	return h.DataServiceHandler.DataInsert(ctx, in, out)
 }
 
 // Client API for ControllerService service

@@ -7,6 +7,7 @@ import "github.com/dexinq/utils/proto/controller/controller.proto";
 
 service DataService {
     rpc DataServe(DataAcquire) returns (Response) {}
+    rpc DataInsert(DataDescription) returns (global.Response) {}
 
 }
 
@@ -20,6 +21,11 @@ message DataAcquire {
 message DataObject {
     int64 TimeStamp = 1;
     int64 Data = 2;
+}
+
+message DataDescription {
+    repeated DataObject do = 1;
+    string DataSourceName = 2;
 }
 
 message Response {
