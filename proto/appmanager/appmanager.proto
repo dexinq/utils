@@ -20,7 +20,7 @@ message AppEntity {
     string AppType = 5;
     int32 AppStatus = 6;
     string AppPeriod = 7;
-    repeated string Topic = 8;
+    string AppId = 8;
 }
 
 message AppList {
